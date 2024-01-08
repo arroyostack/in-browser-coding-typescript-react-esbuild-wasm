@@ -1,5 +1,6 @@
 import * as esbuild from 'esbuild-wasm';
 import { useEffect, useRef, useState } from "react";
+import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 
 
 function App() {
@@ -19,12 +20,19 @@ function App() {
     startService();
   }, [] );
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if ( !ref.current ) return;
-    ref.current.transform( input, {
-      loader: 'jsx',
-      target: 'es2015'
+
+    const result = await ref.current.build( {
+      entryPoints: ['index.js'],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin()]
     } );
+
+    // console.log( result );
+
+    setCode( result.outputFiles[0].text );
   };
 
   return (
@@ -33,6 +41,7 @@ function App() {
         value={ input }
         onChange={ event => setInput( event.target.value ) }
       />
+
       <div>
         <button
           onClick={ handleClick }
@@ -40,6 +49,7 @@ function App() {
       </div>
 
       <pre>{ code }</pre>
+
     </div>
   );
 }
