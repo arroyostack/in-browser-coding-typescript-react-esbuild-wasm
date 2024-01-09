@@ -35,7 +35,7 @@ function App() {
       // Define eliminates warnings
       define: {
         'process.env.NODE_ENV': '"production"',
-        global: 'wondow'
+        global: 'window'
       }
     } );
 
