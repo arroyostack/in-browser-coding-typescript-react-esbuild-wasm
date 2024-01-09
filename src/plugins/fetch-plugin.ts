@@ -16,10 +16,8 @@ export const fetchPlugin = ( inputCode: string ) => {
                     contents: inputCode
                 };
             } );
+
             build.onLoad( { filter: /.*/ }, async ( args: any ) => {
-                // & Check to see if we have already fetched this file.
-                // & and if it is in the cache.
-                // & Otherwise let request to happen
                 console.log( 'onLoad', args );
                 const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>( args.path );
                 if ( cachedResult ) {
