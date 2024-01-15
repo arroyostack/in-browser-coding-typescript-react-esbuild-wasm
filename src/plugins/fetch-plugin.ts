@@ -19,6 +19,7 @@ export const fetchPlugin = ( inputCode: string ) => {
 
             build.onLoad( { filter: /.*/ }, async ( args: any ) => {
                 console.log( 'onLoad', args );
+
                 const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>( args.path );
                 if ( cachedResult ) {
                     // If it is return it inmediately.
@@ -28,6 +29,7 @@ export const fetchPlugin = ( inputCode: string ) => {
 
             build.onLoad( { filter: /.css$/ }, async ( args: any ) => {
                 console.log( 'onLoad', args );
+
                 const { data, request } = await axios.get( args.path );
 
                 const scapedCssFile = data.replace( /\n/g, '' ).replace( /"/g, '\\"' ).replace( /'/g, "\\'" );

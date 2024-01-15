@@ -42,6 +42,7 @@ function App() {
     // console.log( result );
 
     setCode( result.outputFiles[0].text );
+    console.log( eval( result.outputFiles[0].text ) );
   };
 
   return (
